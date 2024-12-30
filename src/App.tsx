@@ -1,4 +1,7 @@
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material"
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Login } from "./components/Login";
+import React from "react";
 
 
 const theme = createTheme({
@@ -13,10 +16,15 @@ const theme = createTheme({
   },
 });
 
-function App() {
+const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <Router>
+        <Routes>
+          <Route path="/" Component={Login} />
+        </Routes>
+      </Router>
     </ThemeProvider>
   )
 }
