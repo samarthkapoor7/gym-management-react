@@ -1,0 +1,137 @@
+body, html {
+  color: #ffffff;
+  font-family: 'Lato', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.app-container {
+  min-height: 100vh;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+}
+
+.header {
+  padding: 2rem 0;
+  margin-bottom: 3rem;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.line-accent {
+  height: 2px;
+  width: 100px;
+  background-color: #ffffff;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 0.5rem;
+  text-align: center;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.glass-panel {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 800px;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.line-decoration {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #ffffff;
+  transition: width 0.3s ease;
+}
+
+.form-group:hover .line-decoration {
+  width: 100%;
+}
+
+.action-btn {
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  margin-top: 1.5rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.action-btn:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-2px);
+}
+
+input {
+  color: #ffffff;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  font-family: 'Lato', sans-serif;
+}
+
+input:focus {
+  border-bottom-color: #ffffff;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .header-content {
+    gap: 1rem;
+  }
+
+  .line-accent {
+    width: 50px;
+  }
+
+  .glass-panel {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+}
+
