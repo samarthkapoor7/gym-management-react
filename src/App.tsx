@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Login } from "./components/Login";
 import React from "react";
 import './App.css';
+import { Signup } from "./components/Signup";
 
 
 const theme = createTheme({
@@ -62,6 +63,7 @@ const App: React.FC = () => {
         <Router>
           <Routes>
             <Route path="/" Component={Login} />
+            <Route path="/signup" Component={Signup} />
           </Routes>
       </Router>
       </div>
