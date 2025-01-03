@@ -1,10 +1,12 @@
-import { createTheme, CssBaseline, ThemeProvider } from "@mui/material"
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Login } from "./components/Login";
-import React from "react";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import Login from './components/Login';
+import PrivateRoute from './components/PrivateRoute';
 import './App.css';
-import { Signup } from "./components/Signup";
-
+import { Signup } from './components/Signup';
+import { AdminDashboard } from './components/AdminDashboard';
 
 const theme = createTheme({
   typography: {
@@ -62,13 +64,16 @@ const App: React.FC = () => {
         </header>
         <Router>
           <Routes>
-            <Route path="/" Component={Login} />
-            <Route path="/signup" Component={Signup} />
+            <Route path="/" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/admin" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
+            <Route path="/member" element={<PrivateRoute><MemberDashboard /></PrivateRoute>} />
           </Routes>
-      </Router>
+        </Router>
       </div>
     </ThemeProvider>
-  )
+  );
 }
 
-export default App
+export default App;
+
