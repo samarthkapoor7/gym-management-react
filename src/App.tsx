@@ -3,49 +3,28 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Login from './components/Login';
+import Signup from './components/Signup';
+import AdminDashboard from './components/AdminDashboard';
+import MemberDashboard from './components/MemberDashboard';
 import PrivateRoute from './components/PrivateRoute';
 import './App.css';
-import { Signup } from './components/Signup';
-import { AdminDashboard } from './components/AdminDashboard';
 
 const theme = createTheme({
   typography: {
     fontFamily: 'Lato, sans-serif',
-    h1: {
-      fontFamily: 'Montserrat, sans-serif',
-    },
-    h2: {
-      fontFamily: 'Montserrat, sans-serif',
-    },
-    h3: {
-      fontFamily: 'Montserrat, sans-serif',
-    },
-    h4: {
-      fontFamily: 'Montserrat, sans-serif',
-    },
-    h5: {
-      fontFamily: 'Montserrat, sans-serif',
-    },
-    h6: {
-      fontFamily: 'Montserrat, sans-serif',
-    },
-    button: {
-      fontFamily: 'Montserrat, sans-serif',
-    },
+    h1: { fontFamily: 'Montserrat, sans-serif' },
+    h2: { fontFamily: 'Montserrat, sans-serif' },
+    h3: { fontFamily: 'Montserrat, sans-serif' },
+    h4: { fontFamily: 'Montserrat, sans-serif' },
+    h5: { fontFamily: 'Montserrat, sans-serif' },
+    h6: { fontFamily: 'Montserrat, sans-serif' },
+    button: { fontFamily: 'Montserrat, sans-serif' },
   },
   palette: {
     mode: 'dark',
-    primary: {
-      main: '#ffffff',
-    },
-    background: {
-      default: '#000000',
-      paper: '#333333',
-    },
-    text: {
-      primary: '#ffffff',
-      secondary: '#cccccc',
-    },
+    primary: { main: '#ffffff' },
+    background: { default: '#000000', paper: '#333333' },
+    text: { primary: '#ffffff', secondary: '#cccccc' },
   },
 });
 
