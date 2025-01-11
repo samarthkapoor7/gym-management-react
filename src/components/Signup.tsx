@@ -1,111 +1,154 @@
-import { Button, Container, Stack, TextField, Typography } from "@mui/material";
-import React, { useState } from "react"
-import { Link, useNavigate } from "react-router-dom";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, doc, getFirestore, setDoc } from "firebase/firestore";
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { setDoc, doc } from 'firebase/firestore';
+import { auth, db } from '../firebase';
+import { Container, Typography, TextField, Button, Box, Stack } from '@mui/material';
+import { FirebaseError } from 'firebase/app';
 
+const Signup: React.FC = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-const Signup = () => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setIsLoading(true);
+    try {
+      // Create the user account
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-    const handleSignup = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            const auth = getAuth(); 
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-        
-            if (user) {
-              const db = getFirestore();
-              const userRef = doc(collection(db, 'users'), user.uid);
-              await setDoc(userRef, {
-                name,
-                email,
-                role: 'member',
-              });
-            navigate('/member');
-            }
-        } catch (error) {
-            setError("Failed to create an account. Please try again.");
+      // Add user details to Firestore
+      await setDoc(doc(db, 'users', user.uid), {
+        name,
+        email,
+        role: 'member',
+      });
+
+      // Automatically sign in the user
+      await signInWithEmailAndPassword(auth, email, password);
+
+      // Navigate to the member dashboard
+      navigate('/member');
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            setError('This email is already in use. Please try a different one.');
+            break;
+          case 'auth/invalid-email':
+            setError('Invalid email address. Please check and try again.');
+            break;
+          case 'auth/weak-password':
+            setError('Password is too weak. It should be at least 6 characters long.');
+            break;
+          default:
+            setError('An error occurred during signup. Please try again.');
         }
+      } else {
+        setError('An unexpected error occurred. Please try again.');
+      }
+      console.error('Signup error:', error);
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-      return (
-        <Container component="main" maxWidth="xs">
-            <div className="glass-panel">
-                <Typography component="h1" variant="h5">
-                    Sign up
-                </Typography>
-                <form onSubmit={handleSignup} style={{ width: '100%', marginTop: '1rem' }}>
-                    <div className="form-group">
-                        <TextField
-                          variant="outlined"
-                          margin="normal"
-                          required
-                          fullWidth
-                          id="name"
-                          label="Full Name"
-                          name="name"
-                          autoComplete="name"
-                          autoFocus
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                        />
-                        <div className="line-decoration"></div>
-                    </div>
-                    <div className="form-group">
-                        <TextField
-                          variant="outlined"
-                          margin="normal"
-                          required
-                          fullWidth
-                          id="email"
-                          label="Email Address"
-                          name="email"
-                          autoComplete="email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <div className="line-decoration"></div>
-                    </div>
-                    <div className="form-group">
-                        <TextField
-                          variant="outlined"
-                          margin="normal"
-                          required
-                          fullWidth
-                          id="password"
-                          label="Password"
-                          name="password"
-                          autoComplete="new-password"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <div className="line-decoration"></div>
-                    </div>
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      className="action-btn"
-                    >
-                        Sign Up
-                    </Button>
-                    <Stack direction="row" justifyContent="flex-end">
-                        <Link to="/" style={{ marginTop: 15,  color: 'inherit' }}>
-                        {"Already have an account? Sign in"}
-                        </Link>
-                    </Stack>
-                </form>
-            </div>
-            {error && <Typography color="error" sx={{ mt: 2 }}>{error}</Typography>}
-        </Container>
-    )
-}
+  return (
+    <Container component="main" maxWidth="xs">
+      <Box className="glass-panel">
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
+        <Box component="form" onSubmit={handleSignup} sx={{ mt: 1 }}>
+          <div className="form-group">
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Full Name"
+              name="name"
+              autoComplete="name"
+              autoFocus
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              InputLabelProps={{
+                style: { color: '#ffffff' },
+              }}
+              InputProps={{
+                style: { color: '#ffffff' },
+              }}
+            />
+            <div className="line-decoration"></div>
+          </div>
+          <div className="form-group">
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              InputLabelProps={{
+                style: { color: '#ffffff' },
+              }}
+              InputProps={{
+                style: { color: '#ffffff' },
+              }}
+            />
+            <div className="line-decoration"></div>
+          </div>
+          <div className="form-group">
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="new-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              InputLabelProps={{
+                style: { color: '#ffffff' },
+              }}
+              InputProps={{
+                style: { color: '#ffffff' },
+              }}
+            />
+            <div className="line-decoration"></div>
+          </div>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            className="action-btn"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Signing Up...' : 'Sign Up'}
+          </Button>
+          <Stack direction="row" justifyContent="flex-end">
+            <Link to="/" style={{ color: 'inherit' }}>
+              Already have an account? Sign in
+            </Link>
+          </Stack>
+        </Box>
+      </Box>
+      {error && <Typography color="error" sx={{ mt: 2 }}>{error}</Typography>}
+    </Container>
+  );
+};
 
 export default Signup;
+
