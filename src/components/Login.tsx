@@ -35,52 +35,54 @@ const Login: React.FC = () => {
         </Typography>
         <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
           <div className="form-group">
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              InputLabelProps={{
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            InputLabelProps={{
+              style: { color: '#ffffff' },
+            }}
+            slotProps={{
+              input: {
                 style: { color: '#ffffff' },
-              }}
-              InputProps={{
+              },
+            }}
+          />
+
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            InputLabelProps={{
+              style: { color: '#ffffff' },
+            }}
+            slotProps={{
+              input: {
                 style: { color: '#ffffff' },
-              }}
-            />
-            <div className="line-decoration"></div>
-          </div>
-          <div className="form-group">
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              InputLabelProps={{
-                style: { color: '#ffffff' },
-              }}
-              InputProps={{
-                style: { color: '#ffffff' },
-              }}
-            />
+              },
+            }}
+          />
             <div className="line-decoration"></div>
           </div>
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mb: 3 }}
             className="action-btn"
           >
             Sign In

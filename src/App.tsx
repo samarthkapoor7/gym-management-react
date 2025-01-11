@@ -7,9 +7,8 @@ import Signup from './components/Signup';
 import AdminDashboard from './components/AdminDashboard';
 import MemberDashboard from './components/MemberDashboard';
 import PrivateRoute from './components/PrivateRoute';
-
 import './App.css';
-import FirestoreTest from './components/FIrestoreTest';
+import FirestoreTest from './components/FirestoreTest';
 
 const theme = createTheme({
   typography: {
