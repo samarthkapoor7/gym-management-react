@@ -7,7 +7,9 @@ import Signup from './components/Signup';
 import AdminDashboard from './components/AdminDashboard';
 import MemberDashboard from './components/MemberDashboard';
 import PrivateRoute from './components/PrivateRoute';
+
 import './App.css';
+import FirestoreTest from './components/FIrestoreTest';
 
 const theme = createTheme({
   typography: {
@@ -47,6 +49,7 @@ const App: React.FC = () => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/admin" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
             <Route path="/member" element={<PrivateRoute><MemberDashboard /></PrivateRoute>} />
+            <Route path="/test" element={<FirestoreTest />} />
           </Routes>
         </Router>
       </div>
@@ -55,4 +58,3 @@ const App: React.FC = () => {
 }
 
 export default App;
-
